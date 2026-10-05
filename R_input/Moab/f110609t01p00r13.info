@@ -1,0 +1,42 @@
+***  Enter for every run:
+
+site_name      = Dugout Ranch
+location       = 
+
+investigator   = Thomas Painter
+
+pilot_st_lat   = 38.1068
+pilot_end_lat  = 37.9851
+
+pilot_st_long  = -109.584
+pilot_end_long = -109.584
+
+pilot_st_date  = 110609
+pilot_end_date = 110609
+pilot_st_time  = 19 27 00
+pilot_end_time = 19 31 00
+
+type           = 1
+
+pilot_comments = 
+
+proc_comments  =
+
+***  Enter once per flight tape:
+
+ARC_flight_id   = 
+NASA_log       = 112023
+
+pilot          = Stu Broce
+aircraft_id    = ER-2 806
+
+takeoff_date   = 110609
+landing_date   = 110609
+takeoff_time   = 16 50 00
+landing_time   = 21 30 00
+
+deploymt_site  = DAOF
+
+***  Enter N below if OBC correction should NOT be performed:
+
+OBC_performed  =

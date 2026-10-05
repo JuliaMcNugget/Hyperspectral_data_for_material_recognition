@@ -1,0 +1,241 @@
+=========================================================================
+
+AVIRIS Distribution Document 100625
+
+SEND COMMENTS TO sarah.r.lundeen@jpl.nasa.gov
+                 or
+                 robert.o.green@jpl.nasa.gov
+
+Additional information may be found on http://aviris.jpl.nasa.gov
+
+--------------------------------------------------------------------------
+
+This document describes the data products and contents of an AVIRIS delivery.
+
+Each AVIRIS data product uses the following base name for naming convention (file name extensions are explained later in the document:
+
+fyymmddtnnpnnrnn
+----------------
+
+f:     Airborne Flight.
+yy:    The year of the airborne flight run (i.e. 10 represents 2010).
+mm:    The month of the airborne flight run (i.e. 05 represents May).
+dd:    The day of the airborne flight run (i.e. 22 represents 22nd day of the month).
+tnn:   Legacy naming convention when AVIRIS used to record data onto VLDS tapes.
+pnn:   Power cycle number (static number of 00).
+rnn:   Airborne flight run number.
+v:     Radiance software version number
+
+
+The AVIRIS data products for a particular airborne flight run are organized in the following directory structure:
+
+/fyymmddtnnpnnrnnrdn_v
+|   
+|   *ortho.readme
+|   AVIRIS_OrthoProcessing_Info.txt
+|   fmmyyddtnnpnnrnnrdn_v_*gain
+|   fmmyyddtnnpnnrnnrdn_v_*rcc
+|   fmmyyddtnnpnnrnnrdn_v_*spc
+|   fmmyyddtnnpnnrnnrdn_v_*eph
+|   fmmyyddtnnpnnrnnrdn_v_*lonlat_eph
+|   fmmyyddtnnpnnrnnrdn_v_*obs
+|   fmmyyddtnnpnnrnnrdn_v_*obs.hdr
+|   fmmyyddtnnpnnrnnrdn_v_*obs_ort
+|   fmmyyddtnnpnnrnnrdn_v_*obs_ort.hdr
+|   fmmyyddtnnpnnrnnrdn_v_*ort.plog
+|   fmmyyddtnnpnnrnnrdn_v_*ort_glt
+|   fmmyyddtnnpnnrnnrdn_v_*ort_glt.hdr
+|   fmmyyddtnnpnnrnnrdn_v_*ort_igm
+|   fmmyyddtnnpnnrnnrdn_v_*ort_igm.hdr
+|   fmmyyddtnnpnnrnnrdn_v_*ort_img
+|   fmmyyddtnnpnnrnnrdn_v_*ort_img.hdr
+
+The following types of files should be found:
+
+PER FLIGHT RUN:
+   *gain                 multiplication factors, radiance to 16-bit integer,
+   *rcc                  radiometric calibration coefficients,
+   *spc                  spectral calibration file,
+   *eph                  position data in a WGS-84/NAD83 UTM x,y,z coordinate system,
+   *lonlat_eph           position in WGS-84 longitude, latitude and elevation,
+   *obs                  parameters relating to the geometry of the observation and 
+                         illumination conditions in raw spatial format,
+   *obs.hdr              OBS image header file
+   *obs_ort              parameters relating to the geometry of the observation and 
+                         illumination conditions rendered using the *_ort_glt lookup 
+                         table,
+   *obs_ort.hdr          OBS_ORT image header file,
+   *ort.plog             generic data processing info
+   *ortho.readme         this file,
+   *ort_glt              geometric look-up table,
+   *ort_glt.hdr          GLT image header file,
+   *ort_igm              input geometry file,
+   *ort_igm.hdr          IGM image header file,
+   *ort_img              orthocorrected, scaled radiance image file,
+   *ort_img.hdr          ORT_IMG image header file.
+
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+
+Contents of Files located in /fyymmddtnnpnnrnnrdn_v directory
+
+----------------------------------------------------------------------------
+
+AVIRIS_OrthoProcessing_Info.txt
+
+Contents:   Detailed description of AVIRIS orthorectification process.
+File type:  ASCII.
+
+----------------------------------------------------------------------------
+
+*gain           MULTIPLICATION FACTORS, RADIANCE TO 16-BIT INTEGER
+
+Contents:   Multiplication factors to store radiance as 16-bit integers.
+File type:  ASCII.
+Units:      none.
+Format:     Two columns:  - Multiplication factor,
+                          - Channel number.
+Use:        When each spectrum is divided by the factors in this file the
+            16-bit integers are converted to radiance in units of (micro-
+            watts/cm^2/nm/sr). 
+                
+----------------------------------------------------------------------------
+
+*rcc        RADIOMETRIC CALIBRATION COEFFICIENTS
+
+Contents:   AVIRIS radiometric calibration coefficients and laboratory
+            calibration uncertainty.
+File type:  ASCII.
+Units:      microwatts per centimeter_squared per nanometer per steradian
+            per digitized_number.
+Format:     Three columns:  - Radiometric calibration coefficent,
+                            - Uncertainty in radiometric calibration coeff.,
+                            - Channel number.    
+
+----------------------------------------------------------------------------
+
+*spc        SPECTRAL CALIBRATION FILE
+
+Contents:   AVIRIS spectral calibration.
+File type:  ASCII.
+Units:      nanometers.
+Format:     Five columns:  - Wavelength center position,
+                           - Full width at half maximum for equivalent
+                             gaussian,
+                           - Uncertainty in wavelength center position,
+                           - Uncertainty in FWHM for equivalent gaussian,
+                           - Channel number.
+
+----------------------------------------------------------------------------
+
+*eph         POSITION DATA (WGS-84/NAD83 UTM x,y,z coordinate system)
+
+Contents:    The position data stored in a WGS-84/NAD83 UTM x,y,z coordinate system.
+             The six values store the attitude (roll, pitch and heading) and position (x,y,z)
+             for the sensor at the mid-point in each scan line. 
+File type:   BINARY double precision, floating point IEEE.
+       
+----------------------------------------------------------------------------
+
+*lonlat_eph  POSITION DATA (WGS-84 longitude, latitude and elevation)
+
+Contents:    The position data stored in a WGS-84/NAD83 UTM x,y,z coordinate system.
+File type:   BINARY double precision, floating point IEEE.
+       
+----------------------------------------------------------------------------
+
+*ort_glt     GEOMETRIC LOOKUP TABLE (GLT)
+
+Contents:    Orthocorrected product with a fixed pixel size projected into a rotated UTM
+             system that contains the information about which original pixel occupies 
+             which output pixel in the final product. Additionally, it is sign-coded to 
+             indicate if a certain output pixel is real (indicated by a positive value)
+             or a nearest-neighbor infill pixel (indicated by a negative value).
+             
+             The GLT file contains two parameters:
+                1) sample number
+                2) original line number
+                
+File type:      BINARY 16-bit, integer, IEEE.
+
+Format:         Band interleaved by line with dimensions (2 bands, N samples, 
+                N number of lines).  
+
+----------------------------------------------------------------------------
+
+*ort_glt.hdr    HEADER FILE FOR GEOMETRIC LOOKUP TABLE (GLT.HDR) DATA
+
+Contents:       Format of each *ort_glt file.  This file contains 
+                the number of lines, samples, channel, integer format, pixel size, 
+                scene elevation, UTM zone number and rotation angle information, etc.
+
+File type:      ASCII
+
+----------------------------------------------------------------------------
+
+*ort_igm        INPUT GEOMETRY FILE (IGM)
+
+Contents:       Pixel location data for each radiance image cube. The IGM file
+                data contain three parameters:
+                1) WGS-84 longitude (reported in decimal degrees)
+                2) WGS-84 latitude (reported in decimal degrees)
+                3) Estimated ground elevation at each pixel center 
+                   (reported in meters)
+                
+                No map correction or resampling is applied to the radiance 
+                image cube; the IGM file only reports the surface location of the unadjusted pixel centers.
+
+File type:      BINARY 64-bit double precision, floating point IEEE.
+
+Units:          Band 1 - decimal degrees
+                Band 2 - decimal degrees
+                Band 3 - meters
+
+Format:         Band interleaved by line with dimensions (3 bands, 677 samples, 
+                N number of lines).  
+
+----------------------------------------------------------------------------
+
+*ort_igm.hdr    HEADER FILE FOR INPUT GEOMETRY FILE (IGM) DATA
+
+Contents:       Format of each *ort_igm file.  This file contains 
+                the number of lines, samples, channel, integer format, etc.
+
+File type:      ASCII
+
+----------------------------------------------------------------------------
+
+Contents of Files located in /rdn directory
+
+----------------------------------------------------------------------------
+
+*rdn_v_img      CALIBRATED AVIRIS RADIANCE (IMAGE) DATA
+
+Contents:       AVIRIS calibrated radiance multipled by the gain and stored as
+                16-bit integers.
+
+File type:      BINARY 16-bit signed integer IEEE.
+
+Units:          gain times (microwatts per centimeter_squared per nanometer per
+                steradian).
+
+Format:         Band interleaved by pixel (channel, sample, line) with dimensions
+                (224, ns,nl).  
+--------------------------------------------------------------------------------
+
+*rdn_v_img.hdr   HEADER FILE FOR CALIBRATED AVIRIS RADIANCE (IMAGE) DATA
+
+Contents:        Format of each AVIRIS calibrated radiance scene.  This file contains 
+                 the number of lines, samples, channel, integer format, etc.
+
+File type:       ASCII
+
+=========================================================================
+KNOWN ARTIFACTS
+
+1)  There is a slew effect in the AVIRIS detector array readout.  Slew 
+expresses itself as a slight shift in the IFOV when moving from regions of 
+very different brightnesses.
+
+2) In 2002, the bad detector at channel 77 has been interpolated.
+=========================================================================
